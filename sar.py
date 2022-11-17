@@ -170,3 +170,31 @@ class BinarySingleEnded:
             bits[voltages - data > self.nonidealities["comparator_offset"], i] = 0
 
         return bits
+
+if __name__ == "__main__":
+    import utils
+    import matplotlib.pyplot as plt
+
+    np.random.seed(42)
+
+    N_BITS = 8
+
+    NFFT = 2**14
+    FS = 200e3
+    FIN = 2.111e3
+    OFFSET = 0.5
+    VPP = 0.95
+
+    sine_wave = OFFSET + VPP * 0.5 * np.sin(
+        2 * np.pi * FIN * np.arange(NFFT) / FS)
+
+    adc = BinarySingleEnded(N_BITS, mode="ideal")
+    digitized_bits = adc.digitize(sine_wave)
+
+    digitized_wave = utils.combine_bits(digitized_bits)
+
+    dnl, inl = utils.sine_dnl_inl(digitized_wave, N_BITS, min_value=0, max_value=1)
+
+    plt.plot(dnl)
+    plt.plot(inl)
+    plt.show()
