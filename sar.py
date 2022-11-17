@@ -11,6 +11,7 @@ BinarySingleEnded
 """
 
 import warnings
+from typing import Tuple
 
 import numpy as np
 
@@ -171,9 +172,45 @@ class BinarySingleEnded:
 
         return bits
 
+    def get_dnl_inl(self, data: np.ndarray = None, **kwargs) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Get the DNL and INL of the ADC.
+
+        Parameters
+        ----------
+        data : np.ndarray, optional
+            Input sine wave
+            A sine wave is generated if no input is provided.
+
+        Returns
+        -------
+        dnl : np.ndarray
+            DNL of valid codes
+
+        inl : np.ndarray
+            INL of valid codes
+        """
+
+        # Generate sine wave if not provided
+        if data is None:
+            n_points = kwargs.get("n_points", 2**14)
+            sample_rate = kwargs.get("sample_rate", 1e6)
+            fin = kwargs.get("fin", 2.111e3)
+            offset = kwargs.get("offset", self.v_ref / 2)
+            amplitude = kwargs.get("amplitude", self.v_ref)
+
+            data = offset + amplitude * 0.5 * np.sin(
+                2 * np.pi * fin * np.arange(n_points) / sample_rate
+            )
+
+        return utils.sine_dnl_inl(data, self.n_bits, min_value=0, max_value=self.v_ref)
+
+
 if __name__ == "__main__":
-    import utils
     import matplotlib.pyplot as plt
+
+    import utils
+
 
     np.random.seed(42)
 
