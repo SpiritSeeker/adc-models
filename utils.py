@@ -11,6 +11,12 @@ combine_bits(
 sine_transition_points(
         data: np.ndarray, n_bits: int, **kwargs
     ) -> np.ndarray
+    Compute the transition points an ADC from a digitized sine wave.
+
+sine_dnl_inl(
+        data: np.ndarray, n_bits: int, **kwargs
+    ) -> Tuple[np.ndarray, np.ndarray]
+    Compute the DNL and INL of the ADC from a digitzed sine wave.
 """
 
 from typing import Tuple
