@@ -64,6 +64,15 @@ def sine_transition_points(data: np.ndarray, n_bits: int, **kwargs) -> np.ndarra
     n_bits : int
         Bit-resolution of the ADC to be assumed
 
+    **kwargs
+        min_value: float
+            Lower bound of the first code
+            Defaults to minimum value in the data
+
+        max_value: float
+            Upper bound of the last code
+            Defaults to maximum value in the data
+
     Returns
     -------
     np.ndarray
@@ -101,6 +110,15 @@ def sine_dnl_inl(
 
     n_bits : int
         Bit-resolution of the ADC to be assumed
+
+    **kwargs
+        min_value: float
+            Lowest value corresponding to the first code
+            Defaults to minimum value in the data.
+
+        max_value: float
+            Highest value corresponding to the last code
+            Defaults to maximum value in the data.
 
     Returns
     -------

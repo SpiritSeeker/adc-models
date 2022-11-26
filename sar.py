@@ -76,6 +76,32 @@ class BinarySingleEnded:
                 * `ideal` mode is only for capacitances to be binary.
                 * `ideal` mode can have parasitic caps and comparator offset.
 
+        **kwargs
+            v_ref: float
+                Reference voltage of the ADC (in V)
+                Default value is `1`.
+
+            parasitic_cap: float
+                Value of the parasitic capacitance at the input of the comparator
+                Default value is `0`.
+
+            comparator_offset: float
+                Offset voltage of the comparator (in V)
+                Default value is `0`.
+
+            capacitances: np.ndarray
+                Array of capacitance values
+
+            mismatch_var: float
+                Standard deviation of the mismatch in generated capacitance
+                Default value is `0.05` (5%).
+                Ignored if `capacitances` is provided or `mode` is `ideal`.
+
+            sub_binary: bool
+                Flag to ensure sub-binary condition of the generated capacitors
+                Default value is `True`.
+                Ignored if `capacitances` is provided or `mode` is `ideal`.
+
         Raises
         ------
         NotImplementedError
@@ -184,6 +210,30 @@ class BinarySingleEnded:
         data : np.ndarray, optional
             Input sine wave
             A sine wave is generated if no input is provided.
+
+        **kwargs
+            Parameters of the sine wave to be generated
+            Ignored if `data` is provided.
+            ...
+            n_points: int
+                Number of points in the sine wave
+                Default value is `2**14`.
+
+            sample_rate: int
+                Sample rate of the sine wave (in Hz)
+                Default value is `1e6`.
+
+            fin: int
+                Frequency of the sine wave
+                Default value is `2.111e3`.
+
+            offset: int
+                Voltage offset of the sine wave
+                Default value is `self.v_ref/2`.
+
+            amplitude: int
+                Peak-to-peak voltage of the sine wave
+                Default value is `self.v_ref`.
 
         Returns
         -------
