@@ -53,6 +53,9 @@ class BinarySingleEnded:
 
     digitize(data: np.ndarray) -> np.ndarray
         Generate digital bits from the input data using the ADC
+
+    get_dnl_inl(self, data: np.ndarray = None, **kwargs) -> Tuple[np.ndarray, np.ndarray]
+        Get the DNL and INL of the ADC
     """
 
     def __init__(self, n_bits: int, mode: str = "ideal", **kwargs) -> None:
